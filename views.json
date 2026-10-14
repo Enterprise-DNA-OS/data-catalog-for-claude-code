@@ -6,7 +6,7 @@
     "sections": [
       {
         "title": "Review queue",
-        "sql": "select * from review_queue order by review_due nulls first,name"
+        "sql": "select source,name,owner,review_due,review_required,open_issues,next_action from review_queue order by review_due nulls first,name"
       },
       {
         "title": "Owner workload",
