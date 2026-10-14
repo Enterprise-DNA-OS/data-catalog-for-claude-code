@@ -1,0 +1,3 @@
+Source,Schema,Table,Name,Data type,Description
+Sample ERP,sales,Accounts,Account number,text,Internal identifier
+Sample ERP,sales,Accounts,Email,text,

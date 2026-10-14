@@ -1,11 +1,55 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "data-dictionary",
+    "title": "Data dictionary",
+    "for_each": "select id,name from assets where not archived order by name",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Asset ownership and purpose",
+        "sql": "select source,namespace,name,kind,description,owner,classification,purpose,retention_rule,review_due from assets where id=$1"
+      },
+      {
+        "title": "Field definitions",
+        "sql": "select name,data_type,description,classification from fields where asset_id=$1 order by name"
+      },
+      {
+        "title": "Business terms",
+        "sql": "select t.name,t.definition,t.owner from terms t join term_links l on l.term_id=t.id where l.asset_id=$1 order by t.name"
+      }
+    ]
+  },
+  {
+    "name": "steward-review",
+    "title": "Steward review record",
+    "for_each": "select id,name from assets where not archived order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Recorded decisions",
+        "sql": "select reviewed_on,next_due,actor,evidence from reviews where asset_id=$1 order by created_at"
+      },
+      {
+        "title": "Open actions",
+        "sql": "select title,owner,severity,due from issues where asset_id=$1 and status='open' order by due"
+      },
+      {
+        "title": "Quality evidence",
+        "sql": "select rule,checked_on,examined,failed,evidence,actor from quality_runs where asset_id=$1 order by checked_on"
+      }
+    ]
+  },
+  {
+    "name": "change-impact",
+    "title": "Recorded change impact",
+    "for_each": "select id,name from assets where not archived order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Downstream dependencies",
+        "note": "Only recorded asset links are traversed. Verify completeness with the source owner.",
+        "sql": "WITH RECURSIVE reached(id) AS (SELECT downstream_id FROM lineage WHERE upstream_id=$1 UNION SELECT l.downstream_id FROM lineage l JOIN reached r ON l.upstream_id=r.id) SELECT a.source,a.name,a.owner,a.kind FROM reached r JOIN assets a ON a.id=r.id WHERE a.id<>$1 ORDER BY a.name"
+      }
     ]
   }
 ]

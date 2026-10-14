@@ -1,43 +1,62 @@
 # Data Catalog for Claude Code: operating instructions
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+This is one organisation's internal metadata and steward-review desk. Read the database before answering. No external credentials are needed for the demo.
 
-## Who this is for
+## Who it serves
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
+The data owner, analyst and steward who agree definitions, track quality evidence and review the consequences of changes. The demo business and its observations are synthetic. Ask the operator which real organisation and database apply before working with real records.
 
-Fill this in once. A worker with context knows. A worker without it guesses.
+## One route for each recurring job
 
-## How to work
-
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
-
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
+| Job | Command |
 |---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
+| assets | /assets |
+| fields | /fields |
+| glossary | /glossary |
+| review queue | /review-queue |
+| owner workload | /owner-workload |
+| definition gaps | /definition-gaps |
+| sensitive register | /sensitive-register |
+| lineage | /lineage |
+| issues | /issues |
+| quality | /quality |
+| attention | /attention |
+| compliance | /compliance |
+| history | /history |
+| unlinked terms | /unlinked-terms |
+| asset | /asset |
+| impact | /impact |
+| weekly review | /weekly-review |
+| add | /add |
+| describe field | /describe-field |
+| add field | /add-field |
+| set metadata | /set-metadata |
+| define term | /define-term |
+| link term | /link-term |
+| link lineage | /link-lineage |
+| review | /review |
+| raise issue | /raise-issue |
+| resolve issue | /resolve-issue |
+| log quality | /log-quality |
+| import | /import |
+| export | /export |
+| draft review | /draft-review |
+| Add a field or change a rule | /customise |
+| Add a read-only report | /new-view |
 
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
+The CLI is scripts/catalog.mjs. Use npm run catalog -- help for exact flags. All writes take --actor. Names match without case; ambiguous names print candidates and exit 1. Use ids to select.
 
-## Hard rules
+## Rules
 
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
+- Every factual answer starts with CLI output. The database is the source of truth for recorded metadata, not a substitute for checking the source system.
+- Read an asset before changing it. Never invent ownership, lineage links, quality observations or evidence.
+- Import begins with an inspected export and a dry run. Preserve source identities and reconcile counts. New or changed records require review.
+- Review dates are local policy, not statutory deadlines. Read docs/compliance.md before interpreting compliance results.
+- Draft only, never send. Never publish internal documents, exports or views. No source-system writes or external database scans exist in this build.
+- Never delete records without explicit approval. The CLI has no delete command.
+- The desk trusts one organisation's operator. Actor labels are not authentication. Database administrators can alter the audit trail.
+- Default embedded PGlite lives in .data/db; DATA_DIR changes it. DATABASE_URL chooses a trusted PostgreSQL connection. Keep demo and real data separate.
+- Schema changes go in a new migration. Do not edit an applied migration. Use the shared HTML renderer for documents and views.
+- Run npm test after code changes. Its database is temporary; TEST_DATABASE_URL is only for a disposable PostgreSQL database.
 
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off Dataedo.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/dataedo
+Omni by Enterprise DNA installs, customises and runs this desk: https://enterprisedna.co/omni/instead-of/dataedo

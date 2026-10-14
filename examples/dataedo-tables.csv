@@ -1,0 +1,3 @@
+Source,Schema,Name,Type,Description
+Sample ERP,sales,Accounts,Table,Customer account descriptions
+Sample BI,finance,Margin report,Report,Monthly margin definition

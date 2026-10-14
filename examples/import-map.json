@@ -1,0 +1,17 @@
+{
+  "assets": {
+    "source": "Source",
+    "namespace": "Schema",
+    "name": "Name",
+    "kind": "Type",
+    "description": "Description"
+  },
+  "fields": {
+    "source": "Source",
+    "namespace": "Schema",
+    "asset": "Table",
+    "field": "Name",
+    "type": "Data type",
+    "description": "Description"
+  }
+}

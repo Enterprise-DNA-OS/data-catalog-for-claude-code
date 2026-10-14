@@ -1,13 +1,34 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Data Catalog for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Steward desk",
+    "subtitle": "Recorded metadata and evidence, not a live source scan",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Review queue",
+        "sql": "select * from review_queue order by review_due nulls first,name"
+      },
+      {
+        "title": "Owner workload",
+        "sql": "select * from owner_workload order by owner"
+      },
+      {
+        "title": "Latest quality observations",
+        "sql": "select name,rule,checked_on,examined,failed,failed_percent from quality_latest order by name"
+      }
+    ]
+  },
+  {
+    "name": "controls",
+    "title": "Governance checks",
+    "sections": [
+      {
+        "title": "Evidence gaps",
+        "sql": "select name,rule,finding from compliance_checks order by name,rule"
+      },
+      {
+        "title": "Definitions missing",
+        "sql": "select a.name as asset,f.name as field from fields f join assets a on a.id=f.asset_id where f.description='' order by a.name,f.name"
       }
     ]
   }

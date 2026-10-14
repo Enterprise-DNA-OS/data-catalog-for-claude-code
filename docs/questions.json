@@ -1,0 +1,42 @@
+[
+  [
+    "Which overdue definitions belong to the same owner as a failed quality check?",
+    "owner-workload, quality"
+  ],
+  [
+    "Which customer-data records lack a retention rationale?",
+    "compliance"
+  ],
+  [
+    "Which reports are downstream of a customer register with unresolved issues?",
+    "asset Customers, impact Customers"
+  ],
+  [
+    "Which personal-data fields still have no definition?",
+    "fields, definition-gaps"
+  ],
+  [
+    "Which definitions changed after the last steward review?",
+    "review-queue, asset"
+  ],
+  [
+    "Which business terms have no linked records?",
+    "unlinked-terms"
+  ],
+  [
+    "Which owners carry the most overdue reviews and open actions?",
+    "owner-workload"
+  ],
+  [
+    "Which recorded quality rules have the highest failure rate?",
+    "quality"
+  ],
+  [
+    "Which unassigned archives need an owner before review?",
+    "review-queue"
+  ],
+  [
+    "Which evidence and operator support the latest review decision?",
+    "asset, history"
+  ]
+]
